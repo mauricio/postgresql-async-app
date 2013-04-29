@@ -1,0 +1,24 @@
+@(messageForm: Form[Message])
+@main("Message Form") {
+
+    @if( messageForm.hasErrors ) {
+        <ul>
+            @messageForm.errors.map { error =>
+                <li>@error.key - @error.message</li>
+            }
+        </ul>
+    }
+
+    @helper.form(action = routes.Messages.update) {
+        @helper.inputText(messageForm("content"))
+        @helper.inputDate(messageForm("moment"))
+        @if( messageForm.data.get("id").isDefined ) {
+            <input type="hidden" name="id" value="@messageForm.get.id.get">
+        }
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                    Create Product
+            </button>
+        </div>
+    }
+}

@@ -1,0 +1,31 @@
+@(messages : IndexedSeq[Message])
+
+@main("Messages!") {
+
+    <h1>List of messages</h1>
+
+    <p>
+        <a href="@routes.Messages.form()">New message</a>
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Content</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @messages.map { message =>
+                <tr>
+                    <td>@message.id.get</td>
+                    <td>@message.content</td>
+                    <td>@message.moment</td>
+                    <td><a href="@routes.Messages.edit(message.id.get)">Edit</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}

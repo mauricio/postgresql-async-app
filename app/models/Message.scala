@@ -1,6 +1,6 @@
 package models
 
-import org.joda.time.{LocalDate, DateTime}
+import org.joda.time.LocalDate
 
 /**
  * User: mauricio

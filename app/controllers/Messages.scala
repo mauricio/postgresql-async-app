@@ -4,7 +4,7 @@ import play.api.mvc.{AsyncResult, Action, Controller}
 import play.api.data._
 import play.api.data.Forms._
 import helpers.Global.messagesRepository
-import com.github.mauricio.async.db.util.ExecutorServiceUtils.CachedExecutionContext
+import com.github.mauricio.async.db.util.ExecutorServiceUtils.FixedExecutionContext
 import models.Message
 
 /**

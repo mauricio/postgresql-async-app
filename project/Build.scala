@@ -9,7 +9,7 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq(
     // Add your project dependencies here
-    "com.github.mauricio" %% "postgresql-async" % "0.0.2-SNAPSHOT" changing()
+    "com.github.mauricio" %% "postgresql-async" % "0.1.1"
   )
 
 

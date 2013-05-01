@@ -1,10 +1,11 @@
 package helpers
 
 import com.github.mauricio.async.db.Configuration
-import com.github.mauricio.async.db.postgresql.pool.{PoolConfiguration, ConnectionObjectFactory, ConnectionPool}
+import com.github.mauricio.async.db.postgresql.pool.ConnectionObjectFactory
 import com.github.mauricio.async.db.util.URLParser
 import models.MessageRepository
 import play.api.{Application, GlobalSettings}
+import com.github.mauricio.async.db.pool.{PoolConfiguration, ConnectionPool}
 
 /**
  * User: mauricio

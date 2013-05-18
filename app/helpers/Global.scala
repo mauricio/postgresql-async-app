@@ -21,6 +21,11 @@ object Global extends GlobalSettings {
       database = Some("postgresql_async_app_development")
     )
   }
+
+  if ( databaseConfiguration.charset == null || databaseConfiguration.charset.name() == null ) {
+    throw new NullPointerException("charset is null")
+  }
+
   private val factory = new PostgreSQLConnectionFactory( databaseConfiguration )
   private val pool = new ConnectionPool(factory, PoolConfiguration.Default)
   val messagesRepository = new MessageRepository( pool )

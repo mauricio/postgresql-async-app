@@ -3,7 +3,7 @@ package models
 import scala.concurrent.Future
 import org.joda.time.LocalDate
 import com.github.mauricio.async.db.{RowData, Connection}
-import com.github.mauricio.async.db.util.ExecutorServiceUtils.FixedExecutionContext
+import com.github.mauricio.async.db.util.ExecutorServiceUtils.CachedExecutionContext
 
 /**
  * User: mauricio

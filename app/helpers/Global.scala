@@ -6,6 +6,7 @@ import models.MessageRepository
 import play.api.{Application, GlobalSettings}
 import com.github.mauricio.async.db.pool.{PoolConfiguration, ConnectionPool}
 import com.github.mauricio.async.db.postgresql.util.URLParser
+import java.nio.charset.Charset
 
 /**
  * User: mauricio
@@ -21,6 +22,8 @@ object Global extends GlobalSettings {
       database = Some("postgresql_async_app_development")
     )
   }
+
+  printf("Available charsets are %s%n", Charset.availableCharsets())
 
   if ( databaseConfiguration.charset == null || databaseConfiguration.charset.name() == null ) {
     throw new NullPointerException("charset is null")

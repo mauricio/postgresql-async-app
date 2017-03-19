@@ -1,4 +1,5 @@
-@(messages : IndexedSeq[Message])
+@import play.api.i18n.Messages
+@(messages : IndexedSeq[Message])(implicit msg: Messages)
 
 @main("Messages!") {
 

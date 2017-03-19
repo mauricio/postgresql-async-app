@@ -1,8 +1,10 @@
 package models
 
+import javax.inject.Inject
+
 import scala.concurrent.Future
 import org.joda.time.LocalDate
-import com.github.mauricio.async.db.{RowData, Connection}
+import com.github.mauricio.async.db.{Connection, RowData}
 import com.github.mauricio.async.db.util.ExecutorServiceUtils.CachedExecutionContext
 
 /**
@@ -18,7 +20,7 @@ object MessageRepository {
   val SelectOne = "SELECT id, content, moment FROM messages WHERE id = ?"
 }
 
-class MessageRepository(pool: Connection) {
+class MessageRepository @Inject() (pool: Connection) {
 
   import MessageRepository._
 

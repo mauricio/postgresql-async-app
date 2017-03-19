@@ -1,4 +1,5 @@
-@(messageForm: Form[Message])
+@import play.api.i18n.Messages
+@(messageForm: Form[Message])(implicit messages: Messages)
 @main("Message Form") {
 
     @if( messageForm.hasErrors ) {

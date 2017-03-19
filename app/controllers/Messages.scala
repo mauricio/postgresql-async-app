@@ -1,18 +1,17 @@
 package controllers
 
-import play.api.mvc.{AsyncResult, Action, Controller}
-import play.api.data._
-import play.api.data.Forms._
-import helpers.Global.messagesRepository
-import com.github.mauricio.async.db.util.ExecutorServiceUtils.CachedExecutionContext
-import models.Message
+import javax.inject.Inject
 
-/**
- * User: mauricio
- * Date: 4/27/13
- * Time: 4:17 PM
- */
-object Messages extends Controller {
+import com.github.mauricio.async.db.util.ExecutorServiceUtils.CachedExecutionContext
+import models.{Message, MessageRepository}
+import play.api.data.Forms._
+import play.api.data._
+import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.{Action, Controller}
+
+import scala.concurrent.Future
+
+object Messages {
 
   val messageForm = Form(
     mapping(
@@ -22,44 +21,47 @@ object Messages extends Controller {
     )(Message.apply)(Message.unapply)
   )
 
-  def index = Action {
-    AsyncResult( messagesRepository.list.map {
+}
+
+class Messages @Inject() (val messagesRepository: MessageRepository)(implicit val messagesApi: MessagesApi) extends Controller with I18nSupport  {
+
+  import Messages._
+
+  def index = Action.async {
+    messagesRepository.list.map {
       messages =>
         Ok(views.html.messages.index(messages))
-    } )
+    }
   }
 
   def form = Action {
     Ok(views.html.messages.form(messageForm))
   }
 
-  def edit( id : Long ) = Action {
-    AsyncResult {
-      messagesRepository.find(id).map {
-        messageOption =>
-          messageOption match {
-            case Some(message) => {
-              Ok( views.html.messages.form( messageForm.fill(message) ) )
-            }
-            case None => Ok( views.html.messages.form( messageForm ) )
+  def edit(id: Long) = Action.async {
+    messagesRepository.find(id).map {
+      messageOption =>
+        messageOption match {
+          case Some(message) => {
+            Ok(views.html.messages.form(messageForm.fill(message)))
           }
-      }
+          case None => Ok(views.html.messages.form(messageForm))
+        }
     }
+
   }
 
-  def update = Action { implicit request =>
+  def update = Action.async { implicit request =>
     messageForm.bindFromRequest().fold(
       form => {
-        BadRequest( views.html.messages.form(form) )
+        Future(BadRequest(views.html.messages.form(form)))
       },
       message => {
-        AsyncResult {
-          messagesRepository.save(message).map {
-            message =>
-              Redirect(routes.Messages.index())
-          }
+        messagesRepository.save(message).map {
+          message =>
+            Redirect(routes.Messages.index())
         }
-      } )
+      })
   }
 
 }
